@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Information Score: {{ player.information_score }}<br>
+        Prediction Score: {{ player.prediction_score }}<br>
+        Respondent Score: {{ player.respondent_score }}<br>
+    </p>
+
+    {% next_button %}
+{% endblock %}
+
+
