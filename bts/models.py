@@ -36,21 +36,16 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    faith_based = models.BooleanField()
-
-    def creating_session(self):
-        self.faith_based = self.session.config.get('faith_based', False)
-
     def calculate_scores(self):
         # helper function that is required for the new oTree format that only allows you to name a function
         # to be called from the wait page (after_all_players_arrive was a method in earlier versions).
 
         # The function requires string name of question field, list of string names of prediction fields,
         # and a list of choices the participants could select from
-        self.calculate_prelec('x1', ['p1_1', 'p1_2', 'p1_3', 'p1_4'], Constants.likert_choices)
+        self.bts('question', ['prediction1', 'prediction2', 'prediction3', 'prediction4'], Constants.likert_choices)
 
 
-    def calculate_prelec(self, belief_field: str, prediction_fields: list, choices: list, alpha=1):
+    def bts(self, belief_field: str, prediction_fields: list, choices: list, alpha=1):
         players = self.get_players()
         if len(choices) != len(prediction_fields):
             raise KeyError('There should be an equaly number of possible answer choices and prediction fields')
@@ -111,14 +106,14 @@ class Player(BasePlayer):
     respondent_score = models.FloatField()
 
     # Question 1
-    x1 = models.IntegerField(choices=Constants.likert_choices, widget=widgets.RadioSelectHorizontal(),
+    question = models.IntegerField(choices=Constants.likert_choices, widget=widgets.RadioSelectHorizontal(),
                              verbose_name="This is the question you are after!")
 
     # Predictions for question 1, one for each likert option
-    p1_1 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[0])
-    p1_2 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[1])
-    p1_3 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[2])
-    p1_4 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[3])
+    prediction1 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[0])
+    prediction2 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[1])
+    prediction3 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[2])
+    prediction4 = models.FloatField(min=0, max=1, verbose_name="How likely are others to answer %s?" % Constants.likert_choices[3])
 
 
 

@@ -5,10 +5,10 @@ from .models import Constants
 
 class TruthSerum(Page):
     form_model = 'player'
-    form_fields = ['x1', 'p1_1', 'p1_2', 'p1_3', 'p1_4']
+    form_fields = ['question', 'prediction1', 'prediction2', 'prediction3', 'prediction4']
 
     def error_message(self, values):
-        prediction_fields = ['p1_1', 'p1_2', 'p1_3', 'p1_4']
+        prediction_fields = ['prediction1', 'prediction2', 'prediction3', 'prediction4']
         prediction_values = [v for k, v in values.items() if k in prediction_fields]
 
         # if any individual value is 0, the geometric mean is not defined

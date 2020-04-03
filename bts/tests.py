@@ -7,9 +7,9 @@ from .models import Constants
 class PlayerBot(Bot):
     def play_round(self):
         submissions = {
-            1: {'x1': 2, 'p1_1': 0.1, 'p1_2': 0.2, 'p1_3': 0.3, 'p1_4': 0.4},
-            2: {'x1': 3, 'p1_1': 0.5, 'p1_2': 0.3, 'p1_3': 0.1, 'p1_4': 0.1},
-            3: {'x1': 4, 'p1_1': 0.5, 'p1_2': 0.2, 'p1_3': 0.2, 'p1_4': 0.1}
+            1: {'question': 2, 'prediction1': 0.1, 'prediction2': 0.2, 'prediction3': 0.3, 'prediction4': 0.4},
+            2: {'question': 3, 'prediction1': 0.5, 'prediction2': 0.3, 'prediction3': 0.1, 'prediction4': 0.1},
+            3: {'question': 4, 'prediction1': 0.5, 'prediction2': 0.2, 'prediction3': 0.2, 'prediction4': 0.1}
         }
 
         correct_scores = {
@@ -20,9 +20,11 @@ class PlayerBot(Bot):
 
         # test page
         # predictions do not sum to 1
-        yield SubmissionMustFail(pages.TruthSerum, {'x1': 2, 'p1_1': 0.1, 'p1_2': 0.2, 'p1_3': 0.3, 'p1_4': 0.5})
+        yield SubmissionMustFail(pages.TruthSerum, {'question': 2, 'prediction1': 0.1, 'prediction2': 0.2,
+                                                    'prediction3': 0.3, 'prediction4': 0.5})
         # at least one entry == 0
-        yield SubmissionMustFail(pages.TruthSerum, {'x1': 2, 'p1_1': 0, 'p1_2': 0.2, 'p1_3': 0.3, 'p1_4': 0.5})
+        yield SubmissionMustFail(pages.TruthSerum, {'question': 2, 'prediction1': 0, 'prediction2': 0.2,
+                                                    'prediction3': 0.3, 'prediction4': 0.5})
 
         # all good
         yield pages.TruthSerum, submissions[self.player.id_in_subsession]
